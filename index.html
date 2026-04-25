@@ -1,0 +1,18 @@
+<form action="YOUR_GOOGLE_SCRIPT_URL" method="POST">
+  <label>ID Ruta (Auto-filled by QR):</label><br>
+  <input type="text" name="route_id" id="route_id" readonly><br><br>
+  
+  <label>Bidones Llenos Entregados:</label><br>
+  <input type="number" name="full_delivered" required><br><br>
+  
+  <label>Bidones Vacíos Devueltos:</label><br>
+  <input type="number" name="empty_returned" required><br><br>
+  
+  <label>Método de Pago:</label><br>
+  <select name="payment" required>
+    <option value="Efectivo">Efectivo</option>
+    <option value="Transferencia">Transferencia</option>
+  </select><br><br>
+  
+  <button type="submit">Registrar Entrega</button>
+</form>

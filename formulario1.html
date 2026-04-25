@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atención al Cliente - Café | ¡Está Rico!</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/6Rb9wxvW/logo.png">
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #c5c5c5 50%, #bbbbbb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 153, 51, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 153, 51, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.4),
+                0 0 60px rgba(255, 153, 51, 0.1);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: #3f1615;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, transparent 70%);
+            animation: rotateGlow 20s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-overlay {
+            width: 300px;
+            height: auto;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
+            animation: logoFloat 4s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-overlay:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .form-content {
+            padding: 40px;
+            position: relative;
+        }
+
+        .form-title {
+            color: #4C1A1A;
+            font-size: 1.9em;
+            margin-bottom: 10px;
+            text-align: center;
+            animation: fadeInDown 0.8s ease 0.3s both;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 0.95em;
+            animation: fadeInDown 0.8s ease 0.4s both;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease both;
+            position: relative;
+            z-index: 1;
+        }
+        .form-group:nth-child(1) { animation-delay: 0.5s; }
+        .form-group:nth-child(2) { animation-delay: 0.6s; }
+        .form-group:nth-child(3) { animation-delay: 0.7s; }
+        .form-group:nth-child(4) { animation-delay: 0.8s; }
+        .form-group:nth-child(5) { animation-delay: 0.9s; }
+        .form-group:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            color: #4C1A1A;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            transition: color 0.3s ease;
+        }
+
+        .required {
+            color: #4B1B18;
+            margin-left: 4px;
+            animation: requiredPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes requiredPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            background: white;
+            position: relative;
+        }
+
+        input[type="text"]:hover,
+        input[type="tel"]:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #511E1A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 153, 51, 0.15);
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #511E1A;
+            box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.15), 0 4px 12px rgba(255, 153, 51, 0.2);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .phone-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            position: relative;
+        }
+
+        .country-select-wrapper {
+            position: relative;
+            width: 90px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-selected {
+            padding: 10px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 0.95em;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            user-select: none;
+            min-height: 50px;
+            padding-right: 2rem;
+        }
+
+        .select-selected .flag-icon {
+            position: static;
+            margin: 0;
+        }
+
+        .select-selected span {
+            display: none;
+        }
+
+        .select-selected::after {
+            content: '▼';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4B1B18;
+            font-size: 0.7em;
+            transition: all 0.3s ease;
+        }
+
+        .select-selected.select-arrow-active::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .select-selected:hover {
+            border-color: #4B1B18;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 153, 51, 0.2);
+            background: linear-gradient(135deg, #c7c7c7b4 0%, #fff5e6 100%);
+        }
+
+        .select-selected:hover::after {
+            color: #4C1A1A;
+        }
+
+        .select-items {
+            position: absolute;
+            background-color: white;
+            bottom: calc(100% + 8px);
+            left: 0;
+            right: auto;
+            min-width: 200px;
+            z-index: 999;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(116, 113, 113, 0.25);
+            max-height: 280px;
+            overflow-y: auto;
+            border: 2px solid #4B1B18;
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div {
+            padding: 14px 16px 14px 52px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .select-items div .flag-icon {
+            position: absolute;
+            left: 16px;
+        }
+
+        .select-items div span {
+            display: inline;
+        }
+
+        .select-items div:hover {
+            background: #b4b3b3b6;
+            padding-left: 56px;
+        }
+
+        .select-items div.same-as-selected {
+            background: linear-gradient(135deg, #4b1b18d1 0%, #583d3b 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .flag-icon {
+            width: 28px;
+            height: 20px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .country-select-wrapper select {
+            display: none;
+        }
+
+        .select-items::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .select-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .select-items::-webkit-scrollbar-thumb {
+            background: #4B1B18;
+            border-radius: 10px;
+        }
+
+        .select-items::-webkit-scrollbar-thumb:hover {
+            background: #4C1A1A;
+        }
+
+        .phone-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .phone-input::before {
+            content: '📱';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .phone-input:focus::before {
+            opacity: 0.8;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #celular {
+            padding-left: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        #celular:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #fff5e6 100%);
+        }
+
+        #celular:focus {
+            background: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #4C1A1A 0%, #672525 50%, #4C1A1A 100%);
+            background-size: 200% 100%;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.35);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease 1.1s both;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+            background-position: 100% 0;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: linear-gradient(135deg, #CCCCCC 0%, #999999 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .mensaje {
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideInMessage 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .mensaje.exito {
+            background: linear-gradient(135deg, #D4EDDA 0%, #c3e6cb 100%);
+            border: 2px solid #28A745;
+            color: #155724;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+
+        .mensaje.error {
+            background: linear-gradient(135deg, #F8D7DA 0%, #f5c6cb 100%);
+            border: 2px solid #DC3545;
+            color: #721C24;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4B1B18;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        small {
+            display: block;
+            margin-top: 6px;
+            color: #666;
+            font-size: 0.85em;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hidden-fields {
+            display: none;
+        }
+
+        .form-group.hidden {
+            display: none;
+        }
+
+        .form-group.hidden.visible {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        /* DEBUG INFO STYLES */
+        .debug-info {
+            background: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            display: none;
+        }
+
+        .debug-info.show {
+            display: block;
+        }
+
+        .debug-info h4 {
+            margin-bottom: 10px;
+            color: #4C1A1A;
+        }
+
+        .debug-info pre {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            body::before {
+                display: none;
+            }
+
+            .container {
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .form-content {
+                padding: 25px 20px;
+                flex: 1;
+            }
+
+            .form-title {
+                font-size: 1.5em;
+            }
+
+            .form-subtitle {
+                font-size: 0.9em;
+                margin-bottom: 25px;
+            }
+
+            .logo-overlay {
+                width: 200px;
+            }
+
+            .phone-input-container {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .country-select-wrapper {
+                width: 70px;
+                flex-shrink: 0;
+            }
+
+            .select-selected {
+                min-height: 48px;
+                padding: 8px;
+                font-size: 0.9em;
+            }
+
+            .select-selected span {
+                display: none;
+            }
+
+            .flag-icon {
+                width: 24px;
+                height: 18px;
+            }
+
+            .phone-input::before {
+                font-size: 1em;
+                left: 12px;
+            }
+
+            #celular {
+                padding-left: 18px;
+                font-size: 1em;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            input[type="text"],
+            input[type="tel"],
+            select,
+            textarea {
+                padding: 14px;
+                font-size: 16px;
+            }
+
+            .submit-btn {
+                padding: 16px;
+                font-size: 1em;
+            }
+        }
+
+
+        .contexto-maquina {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #4C1A1A; /* Borravino */
+            background: rgba(76, 26, 26, 0.08);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border-left: 4px solid #4C1A1A;
+            font-size: 0.95em;
+            animation: fadeIn 0.4s ease;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.ibb.co/6Rb9wxvW/logo.png" alt="¡Está Rico!" class="logo-overlay">
+        </div>
+
+        <div class="form-content">
+            <h2 class="form-title">Servicio de Atención al Cliente</h2>
+            <p class="form-subtitle">Completa el formulario y te contactaremos a la brevedad</p>
+
+            <!-- DEBUG INFO (descomentar para ver diagnóstico) -->
+            <div id="debugInfo" class="debug-info">
+                <h4>🔍 Información de Debug</h4>
+                <pre id="debugContent"></pre>
+            </div>
+
+            <div id="mensaje" class="mensaje"></div>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px; color: #666;">Enviando y redirigiendo a WhatsApp...</p>
+            </div>
+
+            <form id="formulario">
+                <div class="hidden-fields">
+                    <input type="hidden" id="nroMaquina" name="nroMaquina" value="">
+                    <input type="hidden" id="tipoMaquina" name="tipoMaquina" value="">
+                    <input type="hidden" id="cliente" name="cliente" value="">
+                    <input type="hidden" id="sector" name="sector" value="">
+                    <input type="hidden" id="modelo" name="modelo" value="">
+                    <input type="hidden" id="sistPago" name="sistPago" value="">
+                    <input type="hidden" id="obs" name="obs" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre">Ingresa tu Nombre <span class="required">*</span></label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pagado">¿Ha realizado el pago? <span class="required">*</span></label>
+                    <select id="pagado" name="pagado" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="Sí">✅ Sí</option>
+                        <option value="No">❌ No</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="tipoPagoGroup">
+                    <label for="tipoPago">Tipo de Pago Realizado <span class="required">*</span></label>
+                    <select id="tipoPago" name="tipoPago">
+                        <option value="">Seleccione una opción</option>
+                        <option value="Efectivo">💵 Efectivo</option>
+                        <option value="Tarjeta">💳 Tarjeta</option>
+                        <option value="Transferencia">🏦 Transferencia</option>
+                        <option value="Código QR">📱 Código QR</option>
+                        <option value="Otro">➕ Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="celular">Número de Celular <span class="required">*</span></label>
+                    <div class="phone-input-container">
+                        <div class="country-select-wrapper">
+                            <div class="custom-select">
+                                <div class="select-selected">
+                                    <img src="https://flagcdn.com/w40/ar.png" class="flag-icon" alt="AR">
+                                    <span>ARG +54</span>
+                                </div>
+                                <div class="select-items select-hide">
+                                    <div data-value="+54" data-country="ar">
+                                        <img src="https://flagcdn.com/w40/ar.png" class="flag-icon" alt="AR">
+                                        <span>ARG +54</span>
+                                    </div>
+                                    <div data-value="+56" data-country="cl">
+                                        <img src="https://flagcdn.com/w40/cl.png" class="flag-icon" alt="CL">
+                                        <span>CHL +56</span>
+                                    </div>
+                                    <div data-value="+55" data-country="br">
+                                        <img src="https://flagcdn.com/w40/br.png" class="flag-icon" alt="BR">
+                                        <span>BRA +55</span>
+                                    </div>
+                                    <div data-value="+598" data-country="uy">
+                                        <img src="https://flagcdn.com/w40/uy.png" class="flag-icon" alt="UY">
+                                        <span>URY +598</span>
+                                    </div>
+                                    <div data-value="+595" data-country="py">
+                                        <img src="https://flagcdn.com/w40/py.png" class="flag-icon" alt="PY">
+                                        <span>PRY +595</span>
+                                    </div>
+                                    <div data-value="+591" data-country="bo">
+                                        <img src="https://flagcdn.com/w40/bo.png" class="flag-icon" alt="BO">
+                                        <span>BOL +591</span>
+                                    </div>
+                                    <div data-value="+51" data-country="pe">
+                                        <img src="https://flagcdn.com/w40/pe.png" class="flag-icon" alt="PE">
+                                        <span>PER +51</span>
+                                    </div>
+                                    <div data-value="+593" data-country="ec">
+                                        <img src="https://flagcdn.com/w40/ec.png" class="flag-icon" alt="EC">
+                                        <span>ECU +593</span>
+                                    </div>
+                                    <div data-value="+57" data-country="co">
+                                        <img src="https://flagcdn.com/w40/co.png" class="flag-icon" alt="CO">
+                                        <span>COL +57</span>
+                                    </div>
+                                    <div data-value="+58" data-country="ve">
+                                        <img src="https://flagcdn.com/w40/ve.png" class="flag-icon" alt="VE">
+                                        <span>VEN +58</span>
+                                    </div>
+                                    <div data-value="+52" data-country="mx">
+                                        <img src="https://flagcdn.com/w40/mx.png" class="flag-icon" alt="MX">
+                                        <span>MEX +52</span>
+                                    </div>
+                                    <div data-value="+1" data-country="us">
+                                        <img src="https://flagcdn.com/w40/us.png" class="flag-icon" alt="US">
+                                        <span>USA +1</span>
+                                    </div>
+                                    <div data-value="+34" data-country="es">
+                                        <img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES">
+                                        <span>ESP +34</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <select id="codigoPais" style="display: none;">
+                                <option value="+54" data-country="ar" selected>ARG +54</option>
+                                <option value="+56" data-country="cl">CHL +56</option>
+                                <option value="+55" data-country="br">BRA +55</option>
+                                <option value="+598" data-country="uy">URY +598</option>
+                                <option value="+595" data-country="py">PRY +595</option>
+                                <option value="+591" data-country="bo">BOL +591</option>
+                                <option value="+51" data-country="pe">PER +51</option>
+                                <option value="+593" data-country="ec">ECU +593</option>
+                                <option value="+57" data-country="co">COL +57</option>
+                                <option value="+58" data-country="ve">VEN +58</option>
+                                <option value="+52" data-country="mx">MEX +52</option>
+                                <option value="+1" data-country="us">USA +1</option>
+                                <option value="+34" data-country="es">ESP +34</option>
+                            </select>
+                        </div>
+                        <input type="tel" id="celular" name="celular" class="phone-input" placeholder="Ej: 3512345678" pattern="[0-9]{6,15}" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comentarios">¿En qué podemos ayudarte?</label>
+                    <p id="infoContexto" class="contexto-maquina"></p>     
+                    <textarea id="comentarios" name="comentarios" placeholder="Agrega detalles adicionales sobre el problema..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="btnEnviar">ENVIAR FORMULARIO</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-t96DOLHGyNgIYagbFkZUoRLHXDKDOYZsyD34VpCWWgHvTW6-Qii-ER49-I4pXFqOAw/exec';
+const WHATSAPP_NUMBER = obtenerParametroURL('phone') || '3515631347';
+const DEBUG_MODE = false; // Cambiar a true para ver información de debug
+
+let maquinas = [];
+        
+// Funcion para mostrar datos del lugar
+function actualizarContexto() {
+    const cliente = document.getElementById("cliente").value;
+    const sector = document.getElementById("sector").value;
+    const modelo = document.getElementById("modelo").value;
+
+    const contenedor = document.getElementById("infoContexto");
+
+    if (cliente || sector || modelo) {
+        contenedor.innerText = 
+            `Ubicación: 📍 ${cliente || '-'} - ${sector || '-'} - ${modelo || '-'}`;
+        contenedor.style.display = "block";
+    } else {
+        contenedor.style.display = "none";
+    }
+}
+        
+// FUNCIÓN PARA NORMALIZAR STRINGS (eliminar acentos, mayúsculas, espacios extra)
+function normalizar(texto) {
+    if (!texto) return '';
+    return texto
+        .toString()
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ''); // Eliminar acentos
+}
+
+// FUNCIÓN PARA MOSTRAR DEBUG INFO
+function mostrarDebug(info) {
+    if (!DEBUG_MODE) return;
+    
+    const debugDiv = document.getElementById('debugInfo');
+    const debugContent = document.getElementById('debugContent');
+    
+    debugDiv.classList.add('show');
+    debugContent.textContent = JSON.stringify(info, null, 2);
+}
+
+async function cargarMaquinas() {
+    try {
+        const response = await fetch(`${SCRIPT_URL}?accion=obtenerMaquinas`);
+        const data = await response.json();
+        
+        if (data.success) {
+            maquinas = data.maquinas;
+            console.log('✅ Máquinas cargadas:', maquinas.length);
+            console.log('📋 Datos de máquinas:', maquinas);
+            
+            mostrarDebug({
+                accion: 'cargarMaquinas',
+                exito: true,
+                totalMaquinas: maquinas.length,
+                maquinas: maquinas
+            });
+            
+            return true;
+        } else {
+            console.error('❌ Error al cargar máquinas:', data.message);
+            mostrarDebug({
+                accion: 'cargarMaquinas',
+                exito: false,
+                error: data.message
+            });
+            return false;
+        }
+    } catch (error) {
+        console.error('❌ Error al obtener máquinas:', error);
+        mostrarDebug({
+            accion: 'cargarMaquinas',
+            exito: false,
+            error: error.toString()
+        });
+        return false;
+    }
+}
+
+function obtenerParametroURL(nombre) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nombre);
+}
+
+// FUNCIÓN MEJORADA PARA BUSCAR MÁQUINA
+function buscarMaquina(nro, tipo) {
+    // Normalizar valores de búsqueda
+    const nroNormalizado = normalizar(nro);
+    const tipoNormalizado = normalizar(tipo);
+    
+    console.log('🔍 Buscando máquina con:', { nro, tipo });
+    console.log('🔍 Valores normalizados:', { nroNormalizado, tipoNormalizado });
+    
+    // Buscar con coincidencia EXACTA primero
+    let maquina = maquinas.find(m => {
+        const mNro = normalizar(m.nro);
+        const mTipo = normalizar(m.tipo);
+        
+        const nroMatch = mNro === nroNormalizado;
+        const tipoMatch = mTipo === tipoNormalizado;
+        
+        if (DEBUG_MODE) {
+            console.log(`Comparando: ${m.nro} (${m.tipo})`);
+            console.log(`  NRO: "${mNro}" === "${nroNormalizado}" = ${nroMatch}`);
+            console.log(`  TIPO: "${mTipo}" === "${tipoNormalizado}" = ${tipoMatch}`);
+        }
+        
+        return nroMatch && tipoMatch;
+    });
+    
+    // Si no se encontró con tipo, buscar solo por número
+    if (!maquina) {
+        console.log('⚠️ No se encontró con tipo, buscando solo por número...');
+        maquina = maquinas.find(m => {
+            const mNro = normalizar(m.nro);
+            return mNro === nroNormalizado;
+        });
+        
+        if (maquina) {
+            console.log('✅ Encontrada por número solamente:', maquina);
+        }
+    }
+    
+    return maquina;
+}
+
+// INICIALIZAR AL CARGAR LA PÁGINA
+window.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Iniciando carga de página...');
+    
+    // 1. PRIMERO cargar las máquinas y ESPERAR a que termine
+    const cargaExitosa = await cargarMaquinas();
+    
+    if (!cargaExitosa) {
+        console.error('⚠️ No se pudieron cargar las máquinas');
+        mostrarMensaje('error', '⚠️ Error al cargar datos de máquinas. Por favor, recarga la página.');
+        return;
+    }
+    
+    // 2. LUEGO obtener los parámetros de la URL
+    const nroMaquina = obtenerParametroURL('nro');
+    const tipoMaquina = obtenerParametroURL('tipo') || 'Café';
+    const sistPago = obtenerParametroURL('sistpago') || '';
+    const obs = obtenerParametroURL('obs') || '';
+    
+    const urlParams = {
+        nro: nroMaquina,
+        tipo: tipoMaquina,
+        sistpago: sistPago,
+        obs: obs
+    };
+    
+    console.log('🔍 Parámetros URL capturados:', urlParams);
+    mostrarDebug({
+        accion: 'parametrosURL',
+        parametros: urlParams
+    });
+    
+    // 3. Si hay número de máquina, buscarla y rellenar los campos
+    if (nroMaquina) {
+        // Guardar parámetros URL en campos hidden
+        document.getElementById('nroMaquina').value = nroMaquina;
+        document.getElementById('tipoMaquina').value = tipoMaquina;
+        document.getElementById('sistPago').value = sistPago;
+        document.getElementById('obs').value = obs;
+        
+        // Buscar la máquina
+        const maquina = buscarMaquina(nroMaquina, tipoMaquina);
+        
+        if (maquina) {
+            console.log('✅ Máquina encontrada:', maquina);
+            
+            // Rellenar campos con datos de la máquina encontrada
+            document.getElementById('cliente').value = maquina.cliente || '';
+            document.getElementById('sector').value = maquina.sector || '';
+            document.getElementById('modelo').value = maquina.modelo || '';
+
+            actualizarContexto();
+            
+            // Si no hay sistPago en URL pero sí en máquina, usar el de máquina
+            if (!sistPago && maquina.sistPago) {
+                document.getElementById('sistPago').value = maquina.sistPago;
+            }
+            
+            // Si no hay obs en URL pero sí en máquina, usar el de máquina
+            if (!obs && maquina.obs) {
+                document.getElementById('obs').value = maquina.obs;
+            }
+            
+            const datosCargados = {
+                nroMaquina: nroMaquina,
+                tipoMaquina: tipoMaquina,
+                cliente: maquina.cliente || '',
+                sector: maquina.sector || '',
+                modelo: maquina.modelo || '',
+                sistPago: document.getElementById('sistPago').value,
+                obs: document.getElementById('obs').value
+            };
+            
+            console.log('📝 Campos rellenados:', datosCargados);
+            mostrarDebug({
+                accion: 'maquinaEncontrada',
+                maquina: maquina,
+                datosCargados: datosCargados
+            });
+            
+        } else {
+            console.warn('⚠️ No se encontró la máquina con nro:', nroMaquina, 'tipo:', tipoMaquina);
+            console.log('📋 Máquinas disponibles:');
+            maquinas.forEach(m => {
+                console.log(`  - Nro: "${m.nro}" | Tipo: "${m.tipo}" | Cliente: "${m.cliente}" | Sector: "${m.sector}"`);
+            });
+            
+            mostrarDebug({
+                accion: 'maquinaNoEncontrada',
+                busqueda: { nro: nroMaquina, tipo: tipoMaquina },
+                maquinasDisponibles: maquinas.map(m => ({
+                    nro: m.nro,
+                    tipo: m.tipo,
+                    cliente: m.cliente,
+                    sector: m.sector
+                }))
+            });
+            
+            // Mostrar advertencia al usuario
+            mostrarMensaje('error', '⚠️ No se encontraron todos los datos de esta máquina. Por favor, verifica la información.');
+        }
+    } else {
+        console.log('ℹ️ No se proporcionó número de máquina en la URL');
+        mostrarDebug({
+            accion: 'sinParametros',
+            mensaje: 'No hay número de máquina en la URL'
+        });
+    }
+
+    // 4. Inicializar el selector personalizado de país
+    initCustomSelect();
+    
+    // 5. Agregar evento para mostrar/ocultar tipo de pago
+    const pagadoSelect = document.getElementById('pagado');
+    const tipoPagoGroup = document.getElementById('tipoPagoGroup');
+    const tipoPagoSelect = document.getElementById('tipoPago');
+    
+    pagadoSelect.addEventListener('change', function() {
+        if (this.value === 'Sí') {
+            tipoPagoGroup.classList.add('visible');
+            tipoPagoSelect.setAttribute('required', 'required');
+        } else {
+            tipoPagoGroup.classList.remove('visible');
+            tipoPagoSelect.removeAttribute('required');
+            tipoPagoSelect.value = '';
+        }
+    });
+});
+
+function initCustomSelect() {
+    const selectSelected = document.querySelector('.select-selected');
+    const selectItems = document.querySelector('.select-items');
+    const selectOptions = selectItems.querySelectorAll('div');
+    const hiddenSelect = document.getElementById('codigoPais');
+
+    selectSelected.addEventListener('click', function(e) {
+        e.stopPropagation();
+        selectItems.classList.toggle('select-hide');
+        this.classList.toggle('select-arrow-active');
+    });
+
+    selectOptions.forEach(function(option) {
+        option.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            const country = this.getAttribute('data-country');
+            const flagSrc = this.querySelector('img').src;
+            const text = this.querySelector('span').textContent;
+
+            selectSelected.innerHTML = `
+                <img src="${flagSrc}" class="flag-icon" alt="${country}">
+                <span>${text}</span>
+            `;
+
+            hiddenSelect.value = value;
+            selectOptions.forEach(opt => opt.classList.remove('same-as-selected'));
+            this.classList.add('same-as-selected');
+            selectItems.classList.add('select-hide');
+            selectSelected.classList.remove('select-arrow-active');
+        });
+    });
+
+    document.addEventListener('click', function() {
+        selectItems.classList.add('select-hide');
+        selectSelected.classList.remove('select-arrow-active');
+    });
+
+    selectOptions[0].classList.add('same-as-selected');
+}
+
+// ENVÍO DEL FORMULARIO
+const formulario = document.getElementById('formulario');
+const loading = document.getElementById('loading');
+const mensaje = document.getElementById('mensaje');
+const btnEnviar = document.getElementById('btnEnviar');
+
+formulario.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const codigoPais = document.getElementById('codigoPais').value;
+    const numeroCelular = document.getElementById('celular').value.trim();
+    const celularCompleto = numeroCelular ? `${codigoPais}${numeroCelular}` : '';
+
+    const datos = {
+        nroMaquina: document.getElementById('nroMaquina').value,
+        tipoMaquina: document.getElementById('tipoMaquina').value,
+        cliente: document.getElementById('cliente').value,
+        sector: document.getElementById('sector').value,
+        modelo: document.getElementById('modelo').value,
+        sistPago: document.getElementById('sistPago').value,
+        obs: document.getElementById('obs').value,
+        nombre: document.getElementById('nombre').value.trim(),
+        pagado: document.getElementById('pagado').value,
+        tipoPago: document.getElementById('tipoPago').value || '-',
+        celular: celularCompleto,
+        comentarios: document.getElementById('comentarios').value.trim()
+    };
+
+    console.log('📤 Enviando datos:', datos);
+    mostrarDebug({
+        accion: 'enviarFormulario',
+        datos: datos
+    });
+
+    formulario.style.display = 'none';
+    loading.style.display = 'block';
+    btnEnviar.disabled = true;
+
+    try {
+        const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datos)
+        });
+
+        console.log('✅ Respuesta enviada');
+
+        const mensajeWhatsApp = 
+            '🚨 *NUEVA ATENCIÓN REGISTRADA*' + '%0A%0A' +
+            '--- DATOS DE LA MÁQUINA ---' + '%0A' +
+            '🔢 *Nro:* ' + datos.nroMaquina + '%0A' +
+            '🏢 *Cliente:* ' + datos.cliente + '%0A' +
+            '📍 *Sector:* ' + datos.sector + '%0A' +
+            '⚙️ *Modelo:* ' + datos.modelo + '%0A' +
+            '💳 *Sistema de Pago:* ' + datos.sistPago + '%0A' +
+            '📝 *Observaciones:* ' + datos.obs + '%0A%0A' +
+            '--- DATOS DEL CLIENTE ---' + '%0A' +
+            '👤 *Nombre:* ' + datos.nombre + '%0A' +
+            '✅ *Pago realizado:* ' + datos.pagado + '%0A' +
+            '💳 *Tipo de Pago:* ' + datos.tipoPago + '%0A' +
+            (datos.celular ? '📱 *Celular:* ' + datos.celular + '%0A' : '') +
+            '%0A--- COMENTARIOS ---' + '%0A' +
+            (datos.comentarios || 'Sin comentarios adicionales');
+
+        const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensajeWhatsApp}`;
+
+        mostrarMensaje('exito', '✅ ¡Gracias! Redirigiendo a WhatsApp...');
+
+        setTimeout(() => {
+            window.location.href = urlWhatsApp;
+        }, 1500);
+
+    } catch (error) {
+        console.error('❌ Error:', error);
+        mostrarMensaje('error', '❌ Ocurrió un error al enviar el formulario. Por favor, intenta nuevamente.');
+        loading.style.display = 'none';
+        formulario.style.display = 'block';
+        btnEnviar.disabled = false;
+        
+        mostrarDebug({
+            accion: 'errorEnvio',
+            error: error.toString()
+        });
+    }
+});
+
+function mostrarMensaje(tipo, texto) {
+    mensaje.className = `mensaje ${tipo}`;
+    mensaje.textContent = texto;
+    mensaje.style.display = 'block';
+    mensaje.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>

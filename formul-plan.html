@@ -1,0 +1,41 @@
+// Lee tanto GET (desde el HTML nuevo) como POST (compatibilidad)
+function doGet(e) {
+  return procesarDatos(e.parameter);
+}
+
+function doPost(e) {
+  var datos = {};
+  try { datos = JSON.parse(e.postData.contents); } 
+  catch (err) { datos = e.parameter; }
+  return procesarDatos(datos);
+}
+
+function procesarDatos(datos) {
+  try {
+    var ss    = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName("Entregas");
+
+    var nuevaFila = [
+      new Date(),                           // A: Timestamp
+      datos["ID Ruta"]           || "",     // B: ID Ruta
+      datos["Id Nota Entrega"]   || "",     // C: Id Nota Entrega
+      datos["Cliente"]           || "",     // D: Cliente
+      datos["Producto"]          || "",     // E: Producto
+      datos["Cantidad"]          || "",     // F: Cantidad
+      datos["Pagos"]             || "",     // G: Pagos
+      datos["Bidone Entregados"] || "",     // H: Bidone Entregados
+      datos["Bidone Recibidos"]  || ""      // I: Bidone Recibidos
+    ];
+
+    sheet.appendRow(nuevaFila);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "ok" }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "error", msg: error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
